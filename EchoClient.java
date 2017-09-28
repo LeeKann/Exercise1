@@ -1,3 +1,10 @@
+/*
+*Eric Kannampuzha
+*Exercise 1
+*Class EchoClient
+*CS 380
+*Nima
+*/
 
 import java.io.InputStream;
 import java.io.BufferedReader;
@@ -14,15 +21,18 @@ public final class EchoClient {
             InputStream is = socket.getInputStream();
             InputStreamReader isr = new InputStreamReader(is, "UTF-8");
             BufferedReader br = new BufferedReader(isr);
-            //System.out.println(br.readLine());
             OutputStream os = socket.getOutputStream();
             PrintStream out = new PrintStream(os, true, "UTF-8");
-            //out.printf("This is my message\n");
             while(true) {
                 System.out.print("Client> ");
                 InputStreamReader input = new InputStreamReader(System.in, "UTF-8");
                 BufferedReader binput = new BufferedReader(input);
-                out.printf(binput.readLine() + "\n");
+                String message = binput.readLine();
+                if(message.equals("exit")) {
+                    socket.close();
+                    System.exit(0);
+                }
+                out.printf(message + "\n");
                 String line;
                 line = br.readLine();
                 System.out.println("Server> " + line);
